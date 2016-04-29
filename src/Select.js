@@ -486,7 +486,6 @@ const Select = React.createClass({
 			this.setValue(value);
 			this.setState({
 				isOpen: false,
-				inputValue: '',
 				isPseudoFocused: this.state.isFocused,
 			});
 		}
@@ -574,9 +573,11 @@ const Select = React.createClass({
 	},
 
 	selectFocusedOption () {
-		// if (this.props.allowCreate && !this.state.focusedOption) {
-		// 	return this.selectValue(this.state.inputValue);
-		// }
+		if (this.props.allowCreate && !this._focusedOption) {
+			var newValue = this.refs.input.props.value;
+			var value = { value: newValue, label: newValue };
+			return this.selectValue(value);
+		}
 		if (this._focusedOption) {
 			return this.selectValue(this._focusedOption);
 		}
